@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	cfg "github.com/chalupaul/viper"
-	"github.com/chalupaul/ginos/types"
+	"github.com/chalupaul/julep/types"
 	log "github.com/Sirupsen/logrus"
 	"os"
 	cli "github.com/codegangsta/cli"
@@ -34,13 +34,13 @@ func main() {
 			Name: "etcd, e",
 			Value: DefaultEtcdUrl,
 			Usage: "etcd URL",
-			EnvVar: "GINOS_ETCD_URL",
+			EnvVar: "JULEP_ETCD_URL",
 		},
 		cli.StringFlag{
 			Name: "keyfile, k",
 			Value: os.ExpandEnv(DefaultKeyFile),
 			Usage: "private gpg key to decrypt etcd data",
-			EnvVar: "GINOS_PRIVATE_KEY",
+			EnvVar: "JULEP_PRIVATE_KEY",
 		},
 	}
 	app.Action = startup
