@@ -6,12 +6,19 @@ import (
 
 type Host struct {
     Id string
+	Weight int
     Hostname string
 	ServiceIp string
 	HashStart string
 	HashEnd string
 }
 
+type HostGroup struct {
+	Id string
+	Weight int
+	Hosts []Host
+	HostGroups []HostGroup
+}
 func (h *Host) GenID() {
 	if h.Id == "" {
 		h.Id = uuid.New()

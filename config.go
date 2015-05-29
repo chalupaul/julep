@@ -19,6 +19,7 @@ func LoadCfg(url, key string) error {
 	log.WithFields(log.Fields{
 		"url": url,
 		"key": key,
+		"function": "LoadCfg",
 	}).Debug("Loading config")
 	if err := cfg.AddSecureRemoteProvider(CfgProviderType, url, CfgUrl, key); err != nil {
 		log.WithFields(log.Fields{
