@@ -3,12 +3,17 @@ package main
 import (
 	cfg "github.com/chalupaul/viper"
 	log "github.com/Sirupsen/logrus"
+	"time"
 )
 
 const CfgUrl string = "/julep/config.json"
 const CfgProviderType string = "etcd"
 const DefaultEtcdUrl string = "http://localhost:4001/"
 const DefaultKeyFile string = "$HOME/julep/.secring.gpg"
+
+type config struct {
+	hi string
+}
 
 func LoadCfg(url, key string) error {
 	log.WithFields(log.Fields{
@@ -36,5 +41,21 @@ func LoadCfg(url, key string) error {
 		}).Fatal(err)
 		return err
 	}
+	
+	// Read initial config and poll for changes
+	var C config
+	cfg.Marshal(&C)
+	go func() {
+		for {
+			time.Sleep(time.Second * 5)
+			if err := cfg.WatchRemoteConfig(); err != nil {
+				log.Warn(err)
+			} else {
+				log.Warn("Config changed. Reloading.")
+				cfg.Marshal(&C)
+			}
+		}
+	}()
+	
 	return nil
 }
