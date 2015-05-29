@@ -1,11 +1,5 @@
 #!/bin/bash
 
-confdir=${1:-$HOME/julep}
-
-[[ ! -d $confdir ]] && mkdir $confdir 
-cd $confdir
-echo `pwd`
-exit 0
 function hasCommand() {
     progName=$1
     [[ 1 -eq $(which $progName | head -n 1 | wc -l | awk '{print $1}') ]] && \
@@ -31,10 +25,12 @@ if [[ ! $(env | grep GOPATH) ]]; then
 	exit 1
 fi
 
-if [[ ! $(echo $PATH | grep $GOPATH) ]]; then
-	echo '$GOPATH is not in your $PATH. Bailing....'
-	exit 1
-fi
+for i in $(echo $GOPATH | sed 's/:/ /g'); do
+	if [[ ! $(echo $PATH | grep $i) ]]; then
+		echo "$i is not in your \$GOPATH"
+		exit 1
+	fi
+done
 
 [[ ! -f .secring.gpg && ! -f .pubring.gpg ]] && \
 	gpg2 --batch --armor --gen-key app.batch
@@ -44,7 +40,7 @@ fi
 	git clone https://github.com/coreos/etcd.git && \
 	pushd etcd && \
 	bash build && \
-	cp bin/etcd bin/etcdctl $GOPATH/bin && \
+	cp bin/etcd bin/etcdctl $(echo $GOPATH | sed 's/:/ /g' | awk '{print $1}')/bin && \
 	popd && \
 	rm -rf etcd
 
@@ -62,3 +58,4 @@ done
 if [[ $(etcdctl get /julep/config.json 2>&1 | grep 'Key not found' | wc -l) -eq 1 ]]; then
 	crypt set -keyring .pubring.gpg /julep/config.json config.json
 fi
+
