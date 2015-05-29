@@ -11,6 +11,10 @@ const DefaultEtcdUrl string = "http://localhost:4001/"
 const DefaultKeyFile string = "$HOME/julep/.secring.gpg"
 
 func LoadCfg(url, key string) error {
+	log.WithFields(log.Fields{
+		"url": url,
+		"key": key,
+	}).Debug("Loading config")
 	if err := cfg.AddSecureRemoteProvider(CfgProviderType, url, CfgUrl, key); err != nil {
 		log.WithFields(log.Fields{
 			"function": "cfg.AddSecureRemoteProvider",

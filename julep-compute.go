@@ -14,6 +14,9 @@ func init() {
 }
 
 func startup(c *cli.Context) {
+	if c.Bool("verbose") {
+		log.SetLevel(log.DebugLevel)
+	}
 	url := c.String("etcd")
 	key := c.String("keyfile")
 	if err := LoadCfg(url, key); err != nil {
@@ -30,6 +33,10 @@ func main() {
 	app.Usage = "simple. golang. cloud."
 	app.Version = "0.1.0"
 	app.Flags = []cli.Flag{
+		cli.BoolFlag{
+			Name: "verbose",
+			Usage: "verbose mode",
+		},
 		cli.StringFlag{
 			Name: "etcd, e",
 			Value: DefaultEtcdUrl,
