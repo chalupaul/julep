@@ -59,3 +59,9 @@ if [[ $(etcdctl get /julep/config.json 2>&1 | grep 'Key not found' | wc -l) -eq 
 	crypt set -keyring .pubring.gpg /julep/config.json config.json
 fi
 
+
+if [[ ! -e julepEnv.sh ]]; then
+	echo JULEP_ETCD_URL="http://localhost:4001/" >> julepEnv.sh
+	echo JULEP_PRIVATE_KEY=`pwd` >> julepEnv.sh
+	echo "Run \"source julepEnv.sh\" to get started!"
+fi
