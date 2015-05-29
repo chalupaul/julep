@@ -61,7 +61,7 @@ fi
 
 
 if [[ ! -e julepEnv.sh ]]; then
-	echo JULEP_ETCD_URL="http://localhost:4001/" >> julepEnv.sh
-	echo JULEP_PRIVATE_KEY=`pwd`.secring.gpg >> julepEnv.sh
+	echo export JULEP_ETCD_URL="http://localhost:4001/" >> julepEnv.sh
+	echo export JULEP_PRIVATE_KEY=`pwd`.secring.gpg >> julepEnv.sh
 	echo "Run \"source julepEnv.sh\" to get started!"
 fi
