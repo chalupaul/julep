@@ -9,7 +9,7 @@ import (
 const CfgUrl string = "/julep/config.json"
 const CfgProviderType string = "etcd"
 const DefaultEtcdUrl string = "http://localhost:4001/"
-const DefaultKeyFile string = "$HOME/julep/.secring.gpg"
+const DefaultKeyFile string = "/etc/julep/.secring.gpg"
 
 type config struct {
 	hi string

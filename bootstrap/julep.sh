@@ -47,7 +47,6 @@ done
 [[ $(hasCommand crypt) == false ]] && \
 	echo Installing crypt && \
 	go get github.com/xordataexchange/crypt/bin/crypt
-
 [[ ! $(screen -ls | grep '.julep-etcd') ]] && \
 	screen -dmS julep-etcd etcd 
 

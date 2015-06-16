@@ -1,0 +1,11 @@
+{
+  "hosts": [
+    {
+      Id: "",
+      Weight: 10,
+      Hostname: "snazzle.dazzle.rus",
+      ServiceIp: "127.0.0.1",
+      HashStart: 
+    }
+  ]
+}

@@ -9,6 +9,7 @@ type Host struct {
 	Weight int
     Hostname string
 	ServiceIp string
+	ServicePort int
 	HashStart string
 	HashEnd string
 }
