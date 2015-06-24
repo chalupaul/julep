@@ -1,0 +1,19 @@
+{
+	"Name": "ROOT",
+	"Id": 0,
+	"Weight": 0,
+	"Groups": [
+		{
+			"Name": "Group1",
+			"Id": 1,
+			"Weight": 10
+		},
+		{
+			"Name": "Group2",
+			"Id": 2,
+			"Weight": 10
+		}
+	]
+}
+			
+				

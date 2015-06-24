@@ -13,6 +13,12 @@ function verifyCommand() {
         exit 1
     fi
 }
+function setKey() {
+	basename="/julep/hostgroups"
+	basedir="schema"
+	uri=$(echo $1 | sed -e "s/$basedir\/root//" -e 's/_/\//g')
+	crypt set -keyring .pubring.gpg $basename$uri $1
+}
 
 verifyCommand go
 
@@ -54,9 +60,12 @@ while [[ $(etcdctl ls 2>&1 | grep Error | wc -l) -gt 0 ]]; do
 	sleep 1
 done
 
-if [[ $(etcdctl get /julep/config.json 2>&1 | grep 'Key not found' | wc -l) -eq 1 ]]; then
-	crypt set -keyring .pubring.gpg /julep/config.json config.json
+if [[ $(etcdctl get /julep/config 2>&1 | grep 'Key not found' | wc -l) -eq 1 ]]; then
+	crypt set -keyring .pubring.gpg /julep/config config.json
 fi
+	for i in $(ls schema); do
+		setKey $(echo schema/$i)
+	done
 
 
 if [[ ! -e julepEnv.sh ]]; then

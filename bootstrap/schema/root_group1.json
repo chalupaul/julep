@@ -1,0 +1,17 @@
+{
+	"Name": "Group1",
+	"Id": 1,
+	"Weight": 10,
+	"Groups": [
+		{
+			"Id": 3,
+			"Weight": 10,
+			"Name": "GroupA"
+		},
+		{
+			"Id": 4,
+			"Weight": 10,
+			"Name": "GroupB"
+		}
+	]
+}
