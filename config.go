@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-const CfgUrl string = "/julep/config.json"
+const CfgUrl string = "/julep/config"
 const CfgProviderType string = "etcd"
 const DefaultEtcdUrl string = "http://localhost:4001/"
 const DefaultKeyFile string = "/etc/julep/.secring.gpg"

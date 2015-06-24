@@ -7,7 +7,7 @@ import (
 type Host struct {
     Id string
 	Weight int
-    Hostname string
+    Name string
 	ServiceIp string
 	ServicePort int
 	HashStart string
@@ -16,9 +16,10 @@ type Host struct {
 
 type HostGroup struct {
 	Id string
+	Name string
 	Weight int
 	Hosts []Host
-	HostGroups []HostGroup
+	Groups []HostGroup
 }
 func (h *Host) GenID() {
 	if h.Id == "" {

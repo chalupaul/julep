@@ -65,11 +65,11 @@ func main() {
 		"hash": id,
 	}).Info("Instance created.")
 	hosts := make([]types.Host, 3)
-	h1 := types.Host{Hostname: "one.this.thing", HashStart: "000000000000000000000000000000000000000", HashEnd: "113427455640312821154458202477256070485"}
+	h1 := types.Host{Name: "one.this.thing", HashStart: "000000000000000000000000000000000000000", HashEnd: "113427455640312821154458202477256070485"}
 	h1.GenID()
-	h2 := types.Host{Hostname: "one.this.thing", HashStart: "113427455640312821154458202477256070486", HashEnd: "226854911280625642308916404954512140970"}
+	h2 := types.Host{Name: "one.this.thing", HashStart: "113427455640312821154458202477256070486", HashEnd: "226854911280625642308916404954512140970"}
 	h2.GenID()
-	h3 := types.Host{Hostname: "one.this.thing", HashStart: "226854911280625642308916404954512140971", HashEnd: "340282366920938463463374607431768211456"}
+	h3 := types.Host{Name: "one.this.thing", HashStart: "226854911280625642308916404954512140971", HashEnd: "340282366920938463463374607431768211456"}
 	h3.GenID()
 	hosts = append(hosts, h1)
 	hosts = append(hosts, h2)
