@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	cfg "github.com/chalupaul/viper"
+	"github.com/chalupaul/viper"
 	"github.com/chalupaul/julep/types"
 	log "github.com/Sirupsen/logrus"
 	"os"
@@ -13,16 +13,32 @@ func init() {
 	BootstrapLogging()
 }
 
+var cfg *viper.Viper
+var tree *viper.Viper
+
 func startup(c *cli.Context) {
 	if c.Bool("verbose") {
 		log.SetLevel(log.DebugLevel)
 	}
 	url := c.String("etcd")
 	key := c.String("keyfile")
-	if err := LoadCfg(url, key); err != nil {
+	// Load up the site config
+	if c, err := LoadCfg(OptionUrl(url), OptionKey(key)); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
+	} else {
+		log.Debug("Config loaded during startup.")
+		cfg = c
 	}
+	// Load up the infrastructure tree representation
+	/*if t, err := LoadCfg(url, key, DefaultTreeUrl); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	} else {
+		log.Debug("Loaded infrastructure tree representation.")
+		tree = t
+	}
+	*/
 	fmt.Println("::",cfg.GetString("hi"),"::")
 }
 

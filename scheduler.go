@@ -1,12 +1,14 @@
 package main
 
 import (
-//	cfg "github.com/chalupaul/viper"
+//	"github.com/chalupaul/viper"
 //	log "github.com/Sirupsen/logrus"
 //	"github.com/chalupaul/julep/types"
 )
 
-func LoadHosts() error {
+func LoadTree() error {
+	
+//	tree := viper.New()
 //	hgs := cfg
 	return nil
 }
