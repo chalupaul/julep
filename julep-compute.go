@@ -41,15 +41,16 @@ func startup(c *cli.Context) {
 			log.Fatal(err)
 			os.Exit(1)
 		}
+		walkTree := func(hg types.HostGroup) types.HostGroup {
+			for _, g := range(hg.Groups) {
+				fmt.Println("NAME:", g.Name)
+			}
+			return hg
+		}
+		walkTree(HG)
 	}
 	
 	fmt.Println("::",cfg.GetString("hi"),"::")
-	var HG types.HostGroup
-	err := tree.Marshal(&HG); if err != nil {
-		log.Fatal(fmt.Sprintf("unable to decode into struct, %v", err))
-		os.Exit(1)
-	}
-	fmt.Println("fml:",HG.Groups[0].Name,":fml")
 }
 
 func main() {
