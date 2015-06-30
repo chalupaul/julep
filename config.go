@@ -10,14 +10,10 @@ import (
 )
 
 const DefaultCfgUrl string = "/julep/config"
-const DefaultTreeUrl string = "/julep/hostgroups"
+const DefaultTreeUrl string = "/julep/hostgroups.json"
 const CfgProviderType string = "etcd"
 const DefaultEtcdUrl string = "http://localhost:4001/"
 const DefaultKeyFile string = "/etc/julep/.secring.gpg"
-
-type JulepConfig struct {
-	hi string
-}
 
 type ConfigOption struct {
 	Url string
@@ -25,9 +21,9 @@ type ConfigOption struct {
 	CfgUrl string
 	ProviderType string
 	ContentType string
-	MarshalType string
 }
 
+// CfgOpt is a wrapper function to set options for LoadCfg()
 type CfgOpt func(*ConfigOption) error
 
 // LoadCfg builds a config object from etcd values. It takes a url to an etcd server
@@ -41,7 +37,6 @@ func LoadCfg(options ...CfgOpt) (*viper.Viper, error) {
 	co.CfgUrl = DefaultCfgUrl
 	co.ProviderType = "etcd"
 	co.ContentType = "json"
-	co.MarshalType = "JulepConfig"
 	
 	// Override defaults
 	for _, op := range options {
@@ -51,6 +46,7 @@ func LoadCfg(options ...CfgOpt) (*viper.Viper, error) {
 		}
 	}
 	
+	// Make the connections
 	cfg := viper.New()
 	log.WithFields(log.Fields{
 		"url": co.Url,
@@ -68,6 +64,7 @@ func LoadCfg(options ...CfgOpt) (*viper.Viper, error) {
 		return nil, err
 	}
 
+	// Read config from etcd
 	cfg.SetConfigType(co.ContentType)
 	if err := cfg.ReadRemoteConfig(); err != nil {
 		log.WithFields(log.Fields{
@@ -79,9 +76,7 @@ func LoadCfg(options ...CfgOpt) (*viper.Viper, error) {
 		return nil, err
 	}
 	
-	// Read initial config and poll for changes
-	var C JulepConfig
-	cfg.Marshal(&C)
+	// poll for changes
 	go func() {
 		for {
 			time.Sleep(time.Second * 5)
@@ -89,7 +84,6 @@ func LoadCfg(options ...CfgOpt) (*viper.Viper, error) {
 				log.Warn(err)
 			} else {
 				log.Warn("Config changed. Reloading.")
-				cfg.Marshal(&C)
 			}
 		}
 	}()
@@ -124,7 +118,4 @@ func OptionCfgUrl(o string) func(c *ConfigOption) error {
 }
 func OptionProviderType(o string) func(c *ConfigOption) error {
 	return OptionGeneric(o, "ProviderType")
-}
-func OptionMarshalType(o string) func(c *ConfigOption) error {
-	return OptionGeneric(o, "MarshalType")
 }

@@ -6,14 +6,19 @@
 		{
 			"Name": "Group1",
 			"Id": 1,
-			"Weight": 10
+			"Weight": 10,
+			"Groups": [],
+			"Hosts": []
 		},
 		{
 			"Name": "Group2",
 			"Id": 2,
-			"Weight": 10
+			"Weight": 10,
+			"Groups": [],
+			"Hosts": []
 		}
-	]
+	],
+	"Hosts": []
 }
 			
 				

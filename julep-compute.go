@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/chalupaul/viper"
-	"github.com/chalupaul/julep/types"
+	types "github.com/chalupaul/julep/types"
 	log "github.com/Sirupsen/logrus"
 	"os"
 	cli "github.com/codegangsta/cli"
@@ -24,22 +24,32 @@ func startup(c *cli.Context) {
 	key := c.String("keyfile")
 	// Load up the site config
 	if c, err := LoadCfg(OptionUrl(url), OptionKey(key)); err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 		os.Exit(1)
 	} else {
 		log.Debug("Config loaded during startup.")
 		cfg = c
 	}
 	// Load up the infrastructure tree representation
-	/*if t, err := LoadCfg(url, key, DefaultTreeUrl); err != nil {
-		fmt.Println(err)
+	if t, err := LoadCfg(OptionUrl(url), OptionKey(key), OptionCfgUrl(DefaultTreeUrl)); err != nil {
+		log.Fatal(err)
 		os.Exit(1)
 	} else {
 		log.Debug("Loaded infrastructure tree representation.")
-		tree = t
+		var HG types.HostGroup
+		err := t.Marshal(&HG); if err != nil {
+			log.Fatal(err)
+			os.Exit(1)
+		}
 	}
-	*/
+	
 	fmt.Println("::",cfg.GetString("hi"),"::")
+	var HG types.HostGroup
+	err := tree.Marshal(&HG); if err != nil {
+		log.Fatal(fmt.Sprintf("unable to decode into struct, %v", err))
+		os.Exit(1)
+	}
+	fmt.Println("fml:",HG.Groups[0].Name,":fml")
 }
 
 func main() {

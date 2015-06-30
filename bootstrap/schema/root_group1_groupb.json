@@ -2,6 +2,7 @@
 	"Name": "GroupB",
 	"Id": 4,
 	"Weight": 10,
+	"Groups": [],
 	"Hosts": [
 		{
 			"Id": 4,
