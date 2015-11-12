@@ -14,9 +14,9 @@ function verifyCommand() {
     fi
 }
 function setKey() {
-	basename="/julep/hostgroups"
+	basename="/julep/"
 	basedir="schema"
-	uri=$(echo $1 | sed -e "s/$basedir\/root//" -e 's/_/\//g')
+	uri=$(echo $1 | sed -e "s/$basedir\///")
 	crypt set -keyring .pubring.gpg $basename$uri $1
 }
 

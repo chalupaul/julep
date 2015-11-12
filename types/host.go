@@ -16,11 +16,11 @@ type Host struct {
 
 type HostGroup struct {
 	Id string
-	Name string
 	Weight int
 	Hosts []Host
-	Groups []HostGroup
+	ChildGroup *HostGroup
 }
+
 func (h *Host) GenID() {
 	if h.Id == "" {
 		h.Id = uuid.New()

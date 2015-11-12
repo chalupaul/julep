@@ -75,7 +75,7 @@ func LoadCfg(options ...CfgOpt) (*viper.Viper, error) {
 		}).Fatal(err)
 		return nil, err
 	}
-	
+
 	// poll for changes
 	go func() {
 		for {

@@ -1,0 +1,46 @@
+{
+    "Id": 2,
+    "Weight": 40,
+    "Hosts": [
+        {
+            "Id": 3,
+            "Name": "Host3",
+            "ServiceIP": "127.0.0.1",
+            "ServicePort": 8083,
+            "Weight": 10
+        },
+        {
+            "Id": 2,
+            "Name": "Host2",
+            "ServiceIP": "127.0.0.1",
+            "ServicePort": 8082,
+            "Weight": 10
+        }
+    ],
+    "ChildGroup": {
+        "Id": 1,
+        "Weight": 10,
+        "Hosts": [
+            {
+                "Id": 1,
+                "Name": "Host1",
+                "ServiceIP": "127.0.0.1",
+                "ServicePort": 8083,
+                "Weight": 10
+            }
+        ],
+		"ChildGroup": {
+			"Id": 4,
+			"Weight": 10,
+			"Hosts": [
+				{
+					"Id": 4,
+					"Name": "Host4",
+					"ServiecIP": "127.0.0.1",
+					"ServicePort": 8084,
+					"Weight": 10
+				}
+			]
+		}
+    }
+}

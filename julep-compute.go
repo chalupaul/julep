@@ -36,18 +36,12 @@ func startup(c *cli.Context) {
 		os.Exit(1)
 	} else {
 		log.Debug("Loaded infrastructure tree representation.")
-		var HG types.HostGroup
-		err := t.Marshal(&HG); if err != nil {
+		var InfraTree types.HostGroup
+		err := t.Marshal(&InfraTree); if err != nil {
 			log.Fatal(err)
 			os.Exit(1)
 		}
-		walkTree := func(hg types.HostGroup) types.HostGroup {
-			for _, g := range(hg.Groups) {
-				fmt.Println("NAME:", g.Name)
-			}
-			return hg
-		}
-		walkTree(HG)
+		fmt.Println(InfraTree.ChildGroup.ChildGroup.Hosts[0].Name)
 	}
 	
 	fmt.Println("::",cfg.GetString("hi"),"::")
