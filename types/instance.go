@@ -12,7 +12,10 @@ import (
 type Instance struct {
     Id string
     Hostname string
+	Cores int
+	RamMB int
 }
+
 
 func (i *Instance) GenID() *big.Int {
 	if i.Id == "" {

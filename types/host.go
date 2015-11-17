@@ -2,6 +2,7 @@ package types
 
 import (
 	"code.google.com/p/go-uuid/uuid"
+	"sort"
 )
 
 type Host struct {
@@ -26,4 +27,25 @@ func (h *Host) GenID() {
 		h.Id = uuid.New()
 	}
 
+}
+
+type HostById []Host
+
+func (hs HostById) Len() int {
+	return len(hs)
+}
+
+func (hs HostById) Swap(i, j int) {
+	hs[i], hs[j] = hs[j], hs[i]
+}
+
+func (hs HostById) Less(i, j int) bool {
+	return hs[i].Id < hs[j].Id
+}
+
+func (h HostGroup) OrderHostIds() {
+	sort.Sort(HostById(h.Hosts))
+	if h.ChildGroup != nil {
+		h.ChildGroup.OrderHostIds()
+	}
 }

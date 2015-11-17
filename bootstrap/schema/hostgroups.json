@@ -38,7 +38,7 @@
 					"Name": "Host4",
 					"ServiecIP": "127.0.0.1",
 					"ServicePort": 8084,
-					"Weight": 10
+					"Weight": 10,
 				}
 			]
 		}

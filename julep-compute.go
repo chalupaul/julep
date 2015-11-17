@@ -7,6 +7,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"os"
 	cli "github.com/codegangsta/cli"
+	"math/big"
 )
 
 func init() {
@@ -14,7 +15,7 @@ func init() {
 }
 
 var cfg *viper.Viper
-var tree *viper.Viper
+var InfraTree types.HostGroup
 
 func startup(c *cli.Context) {
 	if c.Bool("verbose") {
@@ -36,15 +37,22 @@ func startup(c *cli.Context) {
 		os.Exit(1)
 	} else {
 		log.Debug("Loaded infrastructure tree representation.")
-		var InfraTree types.HostGroup
 		err := t.Marshal(&InfraTree); if err != nil {
 			log.Fatal(err)
 			os.Exit(1)
 		}
+		InfraTree.OrderHostIds()
+//		fmt.Println(InfraTree)
+//		sort.Sort(types.HostById(InfraTree.Hosts))
+		fmt.Println(InfraTree)
 		fmt.Println(InfraTree.ChildGroup.ChildGroup.Hosts[0].Name)
 	}
 	
-	fmt.Println("::",cfg.GetString("hi"),"::")
+	//fmt.Println("::",cfg.GetString("hi"),"::")
+}
+
+func schedule(i types.Instance) (error) {
+	return nil
 }
 
 func main() {
@@ -53,6 +61,7 @@ func main() {
 	app.Name = "julep"
 	app.Usage = "simple. golang. cloud."
 	app.Version = "0.1.0"
+	app.Action = startup
 	app.Flags = []cli.Flag{
 		cli.BoolFlag{
 			Name: "verbose",
@@ -71,13 +80,24 @@ func main() {
 			EnvVar: "JULEP_PRIVATE_KEY",
 		},
 	}
-	app.Action = startup
 	app.Run(os.Args)
+	id := big.NewInt(0)
+	//h := md5.New()
+	//h.Write([]byte(uuid.New()))
+	//idHex := hex.EncodeToString(h.Sum(nil))
+	if _, ok := id.SetString("340282366920938463463374607431768211456", 10); ok {
+		var z big.Int
+		x := big.NewInt(5)
+		fmt.Println(z.Add(id, x))
+		fmt.Printf("number = %v\n", id)
+	} else {
+		fmt.Printf("instance id %#v too large\n", id)
+	}
 	
 
 	
 	
-	
+	/*
 	i := types.Instance{}
 	id :=i.GenID()
 	fmt.Println("instance id: ", id, i.Id)
@@ -95,6 +115,7 @@ func main() {
 	hosts = append(hosts, h1)
 	hosts = append(hosts, h2)
 	hosts = append(hosts, h3)
+	*/
 	
 	
 }
