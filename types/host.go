@@ -49,3 +49,7 @@ func (h HostGroup) OrderHostIds() {
 		h.ChildGroup.OrderHostIds()
 	}
 }
+
+func (h Host) AssignHashBoundaries() {
+	
+}
